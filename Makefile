@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # Set DOCKER_REGISTRY to customise the image docker repo, e.g. "quay.io/jetstack"
-DOCKER_REGISTRY :=
-APP_VERSION :=
+DOCKER_REGISTRY ?=
+APP_VERSION ?=
 HACK_DIR ?= hack
 
 SKIP_GLOBALS := false
@@ -103,3 +103,23 @@ images:
 
 ctl:
 	bazel build //cmd/ctl
+
+# FIPS targets
+##############
+.PHONY: fips_params fips_images fips_push fips
+
+fips_params:
+	./hack/fips-params.sh
+
+fips_images: fips_params
+	APP_VERSION=$(APP_VERSION) \
+	DOCKER_REGISTRY=$(DOCKER_REGISTRY) \
+	bazel run \
+		--stamp \
+		//build:server-images
+	./hack/fips-tags.sh $(DOCKER_REGISTRY) $(APP_VERSION)
+
+fips_push:
+	./hack/fips-push.sh $(DOCKER_REGISTRY) $(APP_VERSION)
+
+fips: fips_images fips_push
