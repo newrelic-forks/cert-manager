@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# +skip_license_check
+
+set -o errexit
 
 # Use the host's Go installation
 # This expects the compilation to happen in a goboring/golang container

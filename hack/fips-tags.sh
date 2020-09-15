@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# +skip_license_check
+
+set -o errexit
 
 REGISTRY=${1}
 TAG=${2}
