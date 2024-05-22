@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	_ "crypto/tls/fipsonly"
 	"context"
 
 	"os"

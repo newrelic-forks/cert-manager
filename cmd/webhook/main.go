@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	_ "crypto/tls/fipsonly"
 	"github.com/cert-manager/cert-manager/internal/cmd/util"
 	logf "github.com/cert-manager/cert-manager/pkg/logs"
 	"github.com/cert-manager/cert-manager/webhook-binary/app"
